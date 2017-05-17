@@ -1,10 +1,9 @@
 package classes;
 import java.util.Scanner;
 public class testEtudiant {
-
 	public static void main(String[] args) {
-		Etudiant carl = new Etudiant(1, "Karl Lagarfeld");
-		Etudiant john = new Etudiant(2, "John Wick");
+		Etudiant carl = new Etudiant("Karl Lagarfeld");
+		Etudiant john = new Etudiant("John Wick");
 		Scanner clavier = new Scanner(System.in);
 		String reponse;
 		System.out.println(carl.getNom() + " a-t-il réussi son examen ? (o/n)");
