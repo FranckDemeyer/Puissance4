@@ -12,17 +12,18 @@ public class MainView {
 			System.out.println("Le joueur " + puissance4.aQuiDeJouer() + " commence");
 			do {
 				display(puissance4);
-				System.out.println("Joueur " + puissance4.aQuiDeJouer() + " choisissez une colonne (1 à 7)");
-				line = clavier.nextLine();
+				System.out.println("Joueur " + puissance4.aQuiDeJouer() + " choisissez une colonne (1 à 7, 0 pour abandonner)");
+				line = clavier.next();
 				colonne = (line != "") ? line.charAt(0) : ' ';
-				while (colonne < '1' && colonne > '7') {
-					System.out.println("vous devez entrer un nombre entre 1 et 7");
+				while (colonne < '0' && colonne > '7') {
+					System.out.println("vous devez entrer un nombre entre 1 et 7 (0 pour abandonner)");
 					colonne = clavier.nextLine().charAt(0);
 				}
-				puissance4.jouer((int)(colonne) - 1);
+				if(colonne != '0') {puissance4.jouer((int)(colonne) - 49);} else {puissance4.abandonner();}
 			} while (!puissance4.gameIsOver());
-			
-		continuer = clavier.next().toLowerCase();
+			System.out.println(" le joueur " + puissance4.getPartie().getGagnant().getNom() + " à gagné " + (puissance4.getPartie().isParAbandon() ? "par abandon :(" : "!!! :)"));
+			System.out.println("voulez vous jouer une nouvelle partie ? (oui pour continuer)");
+			continuer = clavier.next().toLowerCase();
 		} while (continuer.charAt(0) == 'o' || continuer.charAt(0) == 'y');
 		clavier.close();
 	}

@@ -29,23 +29,12 @@ public class Grille {
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
 		Position positionVerifiee;
-		while(memeCouleur && colonne > 1 && ligne < NB_LIGNES && nbAlignes < 4) {
-			colonne--;
-			ligne++;
-			positionVerifiee = new Position(ligne, colonne);
-			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
-			if (memeCouleur) {nbAlignes++;}
-		}
-		colonne = position.getColonne();
-		ligne = position.getLigne();
-		memeCouleur = true;
-		while(memeCouleur && colonne < NB_COLONNES && ligne > 1 && nbAlignes < 4) {
+		while(memeCouleur && colonne < NB_COLONNES && ligne > 0 && nbAlignes <= 4) {
 			colonne++;
 			ligne--;
 			positionVerifiee = new Position(ligne, colonne);
 			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
+			memeCouleur = (jetonVerifie != null && jetonVerifie.getCouleur() == getJeton(position).getCouleur());
 			if (memeCouleur) {nbAlignes++;}
 		}
 		return (nbAlignes == 4) ? true : false;	
@@ -55,23 +44,12 @@ public class Grille {
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
 		Position positionVerifiee;
-		while(memeCouleur && colonne > 1 && ligne > 1 && nbAlignes < 4) {
+		while(memeCouleur && colonne > 0 && ligne > 0 && nbAlignes <= 4) {
 			colonne--;
 			ligne--;
 			positionVerifiee = new Position(ligne, colonne);
 			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
-			if (memeCouleur) {nbAlignes++;}
-		}
-		colonne = position.getColonne();
-		ligne = position.getLigne();
-		memeCouleur = true;
-		while(memeCouleur && colonne < NB_COLONNES && ligne < NB_LIGNES && nbAlignes < 4) {
-			colonne++;
-			ligne++;
-			positionVerifiee = new Position(ligne, colonne);
-			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
+			memeCouleur = (jetonVerifie != null && jetonVerifie.getCouleur() == getJeton(position).getCouleur());
 			if (memeCouleur) {nbAlignes++;}
 		}
 		return (nbAlignes == 4) ? true : false;	
@@ -81,20 +59,20 @@ public class Grille {
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
 		Position positionVerifiee;
-		while(memeCouleur && colonne > 1 && nbAlignes < 4) {
+		while(memeCouleur && colonne > 0 && nbAlignes <= 4) {
 			colonne--;
 			positionVerifiee = new Position(ligne, colonne);
 			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
+			memeCouleur = (jetonVerifie != null && jetonVerifie.getCouleur() == getJeton(position).getCouleur());
 			if (memeCouleur) {nbAlignes++;}
 		}
 		colonne = position.getColonne();
 		memeCouleur = true;
-		while(memeCouleur && colonne < NB_COLONNES && nbAlignes < 4) {
+		while(memeCouleur && colonne < NB_COLONNES && nbAlignes <= 4) {
 			colonne++;
 			positionVerifiee = new Position(ligne, colonne);
 			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
+			memeCouleur = (jetonVerifie != null && jetonVerifie.getCouleur() == getJeton(position).getCouleur());
 			if (memeCouleur) {nbAlignes++;}
 		}
 		return (nbAlignes == 4) ? true : false;
@@ -104,11 +82,11 @@ public class Grille {
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
 		Position positionVerifiee;
-		while(memeCouleur && ligne > 1 && nbAlignes < 4) {
+		while(memeCouleur && ligne > 0 && nbAlignes <= 4) {
 			ligne--;
 			positionVerifiee = new Position(ligne, colonne);
 			jetonVerifie = getJeton(positionVerifiee);
-			memeCouleur = (jetonVerifie != null & jetonVerifie.equals(getJeton(position)));
+			memeCouleur = (jetonVerifie != null & jetonVerifie.getCouleur() == getJeton(position).getCouleur());
 			if (memeCouleur) {nbAlignes++;}
 		}
 		return (nbAlignes == 4) ? true : false;
@@ -174,25 +152,25 @@ public class Grille {
 	@Override
 	public String toString() {
 		Jeton jeton;
-		String retour = "";
+		String retour = "---------------\n";
 		for (int i = 0, j = plateauJetons.length; i < j; i++) {
 			retour += "|";
 			for (int k = 0, l = plateauJetons[i].length; k < l; k++) {
-				jeton = plateauJetons[i][k];
+				jeton = plateauJetons[NB_LIGNES - i - 1][k];
 				if (jeton != null) {
-					System.out.println(">>>" + jeton.getCouleur().toString());
 					if (jeton.getCouleur().equals(Couleur.JAUNE)){
-						retour += "J";
+						retour += "J|";
 					} else {
-						retour += "R";
+						retour += "R|";
 					}
 				} else {
-					retour += " ";
+					retour += " |";
 				}
 			}
-			retour += "|\n";
+			retour += "\n---------------\n";
 		}
-		retour += "|1234567|";
+		retour += "|1|2|3|4|5|6|7|\n";
+		retour += "---------------";
 		return retour;
 	}
 	/** store token in array */
