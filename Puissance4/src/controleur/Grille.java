@@ -12,7 +12,6 @@ public class Grille {
 	private static final String MSG_ERR_LIGNE_INVALIDE = "le numéro de ligne doit etres compris entre 1 et " + NB_LIGNES;
 	/* déclaration des variables */
 		/* privées */
-	
 	private Jeton[][] plateauJetons;
 	/* déclaration des Constructeurs */
 	/** initiate game by creating an array of NB_LIGNES * NB_COLONNES */
