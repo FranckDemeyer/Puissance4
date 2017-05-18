@@ -51,6 +51,6 @@ public class Partie {
 	/* déclaration des Méthodes et Fonctions */
 		/* privées */
 	private Joueur tireAuSort(Joueur[] joueurs) {
-		return joueurs[((int)(Math.random()) * 2) % 2];
+		return joueurs[(int)(Math.random() * 2) % 2];
 	}
 }

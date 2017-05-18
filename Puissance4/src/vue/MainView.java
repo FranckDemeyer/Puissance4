@@ -10,6 +10,7 @@ public class MainView {
 			System.out.println("bienvenue dans Puissance 4");
 			Puissance4 puissance4 = new Puissance4();
 			System.out.println("Le joueur " + puissance4.aQuiDeJouer() + " commence");
+			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 			do {
 				display(puissance4);
 				System.out.println("Joueur " + puissance4.aQuiDeJouer() + " choisissez une colonne (1 à 7, 0 pour abandonner)");
