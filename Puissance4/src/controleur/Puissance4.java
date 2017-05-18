@@ -24,6 +24,7 @@ public class Puissance4 {
 		l = joueurs.length;
 		while(i < l && autreJoueur.equals(courant)) {
 			if (!joueurs[i].equals(courant)){autreJoueur = joueurs[i];}
+			i++;
 		}
 		return autreJoueur;
 	}
@@ -44,14 +45,14 @@ public class Puissance4 {
 			try {
 				numLigne = puissance4.getGrille().insererJeton(jeton, numColonne);
 				Position position = new Position(numLigne, numColonne);
-				continuer = (puissance4.getJoueurCourant().getNbCoupJoues() > 3) ? (puissance4.getGrille().isFullGrille()) ? !puissance4.getGrille().alignementRealise(position) : false : true;
+				puissance4.getGrille().setJeton(jeton, position);
+				continuer = (puissance4.getJoueurCourant().getNbCoupJoues() > 3) ? (puissance4.getGrille().isFullGrille()) ? false : !puissance4.getGrille().alignementRealise(position) : true;
 				if (continuer) {
-					puissance4.getGrille().setJeton(jeton, position);
 					puissance4.getJoueurCourant().setNbCoupJoues();
 					puissance4.setJoueurCourant(autreJoueur());
 				} else {
 					puissance4.setPartieFinie(true);;
-					if(!puissance4.getGrille().isFullGrille()) {puissance4.setGagnant(puissance4.getJoueurCourant());}
+					if(!puissance4.getGrille().isFullGrille() && !puissance4.isParAbandon()) {puissance4.setGagnant(puissance4.getJoueurCourant());}
 				}
 			} catch(IllegalArgumentException e) {
 				
