@@ -1,9 +1,9 @@
 package controleur;
-public class Puissance4Exception extends RuntimeException {
-	/* déclaration des constantes */
-		/* privées */
+public class Puissance4Exception extends Exception {
+	/* dÃ©claration des constantes */
+		/* privÃ©es */
 	private static final long serialVersionUID = -1544923152475792920L;
-	/* déclaration des constructeurs */
+	/* dÃ©claration des constructeurs */
 	public Puissance4Exception() {
 		super();
 	}
