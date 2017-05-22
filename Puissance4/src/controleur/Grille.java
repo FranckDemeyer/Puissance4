@@ -8,8 +8,7 @@ public class Grille {
 	/** define number of line from Config */
 	public static final int NB_LIGNES = Config.NB_LIGNES;
 		/* privées */
-	private static final String MSG_ERR_COLONNE_INVALIDE = "le numéro de colonne doit etres compris entre 1 et " + NB_COLONNES;
-	private static final String MSG_ERR_LIGNE_INVALIDE = "le numéro de ligne doit etres compris entre 1 et " + NB_LIGNES;
+	private static final String MSG_ERR_COLONNE_FULL = "la colonne est pleine, choisissez une autre colonne.";
 	/* déclaration des variables */
 		/* privées */
 	private Jeton[][] plateauJetons;
@@ -24,7 +23,7 @@ public class Grille {
 	}
 	/* déclaration des Méthodes et Fonctions */
 		/* privées */
-	private boolean alignementDiagonalDG(Position position) {
+	private boolean alignementDiagonalDG(Position position) throws Exception {
 		boolean memeCouleur = true;
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
@@ -39,7 +38,7 @@ public class Grille {
 		}
 		return (nbAlignes == 4) ? true : false;	
 	}
-	private boolean alignementDiagonalGD(Position position) {
+	private boolean alignementDiagonalGD(Position position) throws Exception {
 		boolean memeCouleur = true;
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
@@ -54,7 +53,7 @@ public class Grille {
 		}
 		return (nbAlignes == 4) ? true : false;	
 	}
-	private boolean alignementHorizontal(Position position) {
+	private boolean alignementHorizontal(Position position) throws Exception {
 		boolean memeCouleur = true;
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
@@ -77,7 +76,7 @@ public class Grille {
 		}
 		return (nbAlignes == 4) ? true : false;
 	}
-	private boolean alignementVertical(Position position) {
+	private boolean alignementVertical(Position position) throws Exception  {
 		boolean memeCouleur = true;
 		int ligne = position.getLigne(), colonne = position.getColonne(), nbAlignes = 1;
 		Jeton jetonVerifie;
@@ -104,7 +103,7 @@ public class Grille {
 		/* publique */
 	/** check if 4 tokens are aligned
 	 * return a boolean */
-	public boolean alignementRealise(Position position) {
+	public boolean alignementRealise(Position position) throws Exception {
 		boolean alignement = false;
 		alignement = alignementDiagonalDG(position);
 		if(!alignement) {alignement = alignementDiagonalGD(position);}
@@ -116,7 +115,6 @@ public class Grille {
 	 * return IllegalArgumentException if column is out of Array bounds or return a boolean */
 	public boolean isFullColonne(int numColonne) {
 		boolean full = false;
-		if (numColonne >= NB_COLONNES || numColonne < 0) {throw new IllegalArgumentException(MSG_ERR_COLONNE_INVALIDE);}
 		if (plateauJetons[NB_LIGNES - 1][numColonne] != null) {full = true;}
 		return full;
 	}
@@ -135,18 +133,15 @@ public class Grille {
 	 * si la colonne est en dehors du tableau : return IllegalArgumentException if column is out of array bounds,
 	 * return Puissance4Exception if column is full
 	 * or return line number where the token will be put */
-	public int insererJeton(Jeton jeton, int numColonne) {
-		int numLigne;
-		if (numColonne >= NB_COLONNES || numColonne < 0) {throw new IllegalArgumentException(MSG_ERR_COLONNE_INVALIDE);}
-		if(isFullColonne(numColonne)) {numLigne = -1;} // remplacer numLigne = -1 par throw new Puissance4Exception()
+	public int insererJeton(Jeton jeton, int numColonne) throws Exception {
+		int numLigne = -1;
+		if(isFullColonne(numColonne)) {throw new Puissance4Exception(MSG_ERR_COLONNE_FULL);}
 		else {numLigne = numLigne(numColonne);}
 		return numLigne;
 	}
 	/** get token from asked position if position is valid
 	 *  return a token or null */
-	public Jeton getJeton(Position position) {
-		if (position.getColonne() >= NB_COLONNES || position.getColonne() < 0) {throw new IllegalArgumentException(MSG_ERR_COLONNE_INVALIDE);}
-		if (position.getLigne() >= NB_LIGNES || position.getLigne() < 0) {throw new IllegalArgumentException(MSG_ERR_LIGNE_INVALIDE);}
+	public Jeton getJeton(Position position) throws Exception {
 		return plateauJetons[position.getLigne()][position.getColonne()];
 	}
 	@Override

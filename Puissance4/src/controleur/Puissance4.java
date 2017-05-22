@@ -37,25 +37,21 @@ public class Puissance4 {
 		puissance4.setParAbandon(true);
 		puissance4.setGagnant(autreJoueur());
 	}
-	public void jouer(int numColonne) {
+	public void jouer(int numColonne) throws Exception {
 		if (!gameIsOver()) {
 			boolean continuer;
 			int numLigne;
 			Jeton jeton = new Jeton(puissance4.getJoueurCourant().getNom());
-			try {
-				numLigne = puissance4.getGrille().insererJeton(jeton, numColonne);
-				Position position = new Position(numLigne, numColonne);
-				puissance4.getGrille().setJeton(jeton, position);
-				continuer = (puissance4.getJoueurCourant().getNbCoupJoues() > 3) ? (puissance4.getGrille().isFullGrille()) ? false : !puissance4.getGrille().alignementRealise(position) : true;
-				if (continuer) {
-					puissance4.getJoueurCourant().setNbCoupJoues();
-					puissance4.setJoueurCourant(autreJoueur());
-				} else {
-					puissance4.setPartieFinie(true);;
-					if(!puissance4.getGrille().isFullGrille() && !puissance4.isParAbandon()) {puissance4.setGagnant(puissance4.getJoueurCourant());}
-				}
-			} catch(IllegalArgumentException e) {
-				
+			numLigne = puissance4.getGrille().insererJeton(jeton, numColonne);
+			Position position = new Position(numLigne, numColonne);
+			puissance4.getGrille().setJeton(jeton, position);
+			continuer = (puissance4.getJoueurCourant().getNbCoupJoues() > 3) ? (puissance4.getGrille().isFullGrille()) ? false : !puissance4.getGrille().alignementRealise(position) : true;
+			if (continuer) {
+				puissance4.getJoueurCourant().setNbCoupJoues();
+				puissance4.setJoueurCourant(autreJoueur());
+			} else {
+				puissance4.setPartieFinie(true);;
+				if(!puissance4.getGrille().isFullGrille() && !puissance4.isParAbandon()) {puissance4.setGagnant(puissance4.getJoueurCourant());}
 			}
 		}
 	}

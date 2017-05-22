@@ -10,7 +10,7 @@ public class MainView {
 			System.out.println("bienvenue dans Puissance 4");
 			Puissance4 puissance4 = new Puissance4();
 			System.out.println("Le joueur " + puissance4.aQuiDeJouer() + " commence");
-			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+			try {Thread.sleep(2000);} catch (InterruptedException e) {e.getMessage();}
 			do {
 				display(puissance4);
 				System.out.println("Joueur " + puissance4.aQuiDeJouer() + " choisissez une colonne (1 à 7, 0 pour abandonner)");
@@ -20,9 +20,20 @@ public class MainView {
 					System.out.println("vous devez entrer un nombre entre 1 et 7 (0 pour abandonner)");
 					colonne = clavier.nextLine().charAt(0);
 				}
-				if(colonne != '0') {puissance4.jouer((int)(colonne) - 49);} else {puissance4.abandonner();}
+				if(colonne != '0') {
+						try {
+							puissance4.jouer((int)(colonne) - 49);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							try {Thread.sleep(2000);} catch (InterruptedException ex) {ex.getMessage();}
+						}
+				} else {puissance4.abandonner();}
 			} while (!puissance4.gameIsOver());
-			System.out.println(" le joueur " + puissance4.getPartie().getGagnant().getNom() + " à gagné " + (puissance4.getPartie().isParAbandon() ? "par abandon :(" : "!!! :)"));
+			if (puissance4.getPartie().getGagnant() != null) {
+				System.out.println(" le joueur " + puissance4.getPartie().getGagnant().getNom() + " à gagné " + (puissance4.getPartie().isParAbandon() ? "par abandon :(" : "!!! :)"));
+			} else {
+				System.out.println("Match nul !!!");
+			}
 			System.out.println("voulez vous jouer une nouvelle partie ? (oui pour continuer)");
 			continuer = clavier.next().toLowerCase();
 		} while (continuer.charAt(0) == 'o' || continuer.charAt(0) == 'y');
@@ -33,6 +44,6 @@ public class MainView {
 		System.out.println(puissance4.getPartie().getGrille().toString());
 	}
 	private static void clear() {
-		for (int i = 0; i < 50; i++) {System.out.println();}
+		for (int i = 0; i < 100; i++) {System.out.println();}
 	}
 }
