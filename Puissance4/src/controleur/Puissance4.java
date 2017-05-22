@@ -1,16 +1,20 @@
 package controleur;
-/** s'occupe de toute la partie controle du jeu de puissance 4 */
+/** Takes care of the entire control of the game. */
 public class Puissance4 {
 	/* déclaration des variables */
 		/* privées */
 	private Partie puissance4;
 	/* déclaration des Constructeurs */
+	/** initialiizes the game */
 	public Puissance4() {
 		Joueur[] joueurs = new Joueur[2];
 		joueurs[0] = new Joueur(Couleur.JAUNE);
 		joueurs[1] = new Joueur(Couleur.ROUGE);
 		puissance4 = new Partie(joueurs);
 	}
+	/** initializes the game with a part saved previously.
+	* @param puissance4 the game previously saved.
+	*/
 	public Puissance4(Partie puissance4) {
 		this.puissance4 = puissance4;
 	}
@@ -29,14 +33,27 @@ public class Puissance4 {
 		return autreJoueur;
 	}
 		/* publiques */
+	/** @return state of the game, true if the game is over, false otherwise. */
 	public boolean gameIsOver() {
 		return puissance4.isPartieFinie();
 	}
+	/** surrender the game :
+	 * <ul>
+	 * 	<li> sets end of part to true.</li>
+	 * 	<li> sets surrender to true.</li>
+	 * 	<li> sets other player as winner.</li>
+	 * </ul>
+	 */
 	public void abandonner() {
 		puissance4.setPartieFinie(true);
 		puissance4.setParAbandon(true);
 		puissance4.setGagnant(autreJoueur());
 	}
+	/** Place a token in the grid if the move is valid, otherwise request another move
+	* @param numColonne the number of the column where to play.
+	* @throws ArrayIndexOutOfBoundsException if numColonne is out of the array bounds.
+	* @throws Puissance4Exception if numColonne is full.
+	*/
 	public void jouer(int numColonne) throws Exception {
 		if (!gameIsOver()) {
 			boolean continuer;
@@ -55,9 +72,11 @@ public class Puissance4 {
 			}
 		}
 	}
+	/** @return the color of the player who to play. */
 	public Couleur aQuiDeJouer() {
 		return puissance4.getJoueurCourant().getNom();
 	}
+	/** @return the game played. */
 	public Partie getPartie() {
 		return this.puissance4;
 	}

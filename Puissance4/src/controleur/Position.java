@@ -1,9 +1,14 @@
 package controleur;
+/** defines the position. */
 public class Position {
 	/* déclaration des variables */
 	private int colonne;
 	private int ligne;
 	/* déclaration des Constructeurs */
+	/** initializes position with the line number and the column number.
+	* @param ligne the row of the position.
+	* @param colonne the column of the position.
+	*/
 	public Position(int ligne, int colonne) {
 		this.ligne = ligne;
 		this.colonne = colonne;
@@ -25,9 +30,11 @@ public class Position {
 			return false;
 		return true;
 	}
+	/** @return the column number of the position. */
 	public int getColonne() {
 		return colonne;
 	}
+	/** @return the line number of the position. */
 	public int getLigne() {
 		return ligne;
 	}

@@ -12,7 +12,7 @@ package controleur;
  *
  * @author  Fr@nk D.
  * @see     java.lang.Exception
- * @jls 11.2 Compile-Time Checking of Exceptions
+ * jls 11.2 Compile-Time Checking of Exceptions
  * @since   JDK1.0
  */public class Puissance4Exception extends Exception {
 	/* déclaration des constantes */

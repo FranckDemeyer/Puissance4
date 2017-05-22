@@ -1,11 +1,13 @@
 package controleur;
-/** game grid */
+/** game grid.
+* @author Fr@nck D.
+*/
 public class Grille {
 	/* déclaration des constantes */
 		/* publiques */
-	/** define number of columns from Config */
+	/** set number of columns from Config. */
 	public static final int NB_COLONNES = Config.NB_COLONNES;
-	/** define number of line from Config */
+	/** set number of line from Config. */
 	public static final int NB_LIGNES = Config.NB_LIGNES;
 		/* privées */
 	private static final String MSG_ERR_COLONNE_FULL = "la colonne est pleine, choisissez une autre colonne.";
@@ -13,11 +15,13 @@ public class Grille {
 		/* privées */
 	private Jeton[][] plateauJetons;
 	/* déclaration des Constructeurs */
-	/** initiate game by creating an array of NB_LIGNES * NB_COLONNES */
+	/** initializes the game by creating an array of NB_LIGNES * NB_COLONNES. */
 	public Grille() {
 		this.plateauJetons = new Jeton[NB_LIGNES][NB_COLONNES];
 	}
-	/** get array from previous saved game to continue */
+	/** get array from previous saved game to continue.
+	* @param plateauJetons the game board.
+	*/
 	public Grille(Jeton[][] plateauJetons) {
 		this.plateauJetons = plateauJetons;
 	}
@@ -101,8 +105,11 @@ public class Grille {
 		return numLigne;
 	}
 		/* publique */
-	/** check if 4 tokens are aligned
-	 * return a boolean */
+	/** checks if 4 tokens are aligned.
+	* @param position the position of the token to control.
+	* @return alignment.
+	* @throws ArrayIndexOutOfBoundsExceptions if numColonne is out of the array bounds.
+	*/
 	public boolean alignementRealise(Position position) throws Exception {
 		boolean alignement = false;
 		alignement = alignementDiagonalDG(position);
@@ -111,15 +118,18 @@ public class Grille {
 		if(!alignement) {alignement = alignementVertical(position);}
 		return alignement;
 	}
-	/** check if column passed in parameters is full.
-	 * return IllegalArgumentException if column is out of Array bounds or return a boolean */
+	/** checks if column passed in parameters is full.
+	* @param numColonne the number of the column to be checked.
+	* @return status of a column whose number has been passed in parameters. true if full otherwise false.
+	*/
 	public boolean isFullColonne(int numColonne) {
 		boolean full = false;
 		if (plateauJetons[NB_LIGNES - 1][numColonne] != null) {full = true;}
 		return full;
 	}
-	/**check if the game grid is full
-	 * return a boolean */
+	/**checks if the game grid is full.
+	* @return state of the grid. true if full, false otherwise.
+	*/
 	public boolean isFullGrille() {
 		boolean full = true;
 		int i = 0;
@@ -129,18 +139,23 @@ public class Grille {
 		} while (i < NB_COLONNES && full);
 		return full;
 	}
-	/** check possibility of putting a token in array at asked column
-	 * si la colonne est en dehors du tableau : return IllegalArgumentException if column is out of array bounds,
-	 * return Puissance4Exception if column is full
-	 * or return line number where the token will be put */
+	/** checks possibility of putting a token in the array at the requested column.
+	* @param jeton the token to insert.
+	* @param numColonne the number of the column where to insert the token.
+	* @return line number where the token will be placed.
+	* @throws Puissance4Exception if column is full.
+	*/
 	public int insererJeton(Jeton jeton, int numColonne) throws Exception {
 		int numLigne = -1;
 		if(isFullColonne(numColonne)) {throw new Puissance4Exception(MSG_ERR_COLONNE_FULL);}
 		else {numLigne = numLigne(numColonne);}
 		return numLigne;
 	}
-	/** get token from asked position if position is valid
-	 *  return a token or null */
+	/** get the token at the requested position if it's valid.
+	* @param position the position of the token to get.
+	* @return a token if no exception is thrown, null otherwise.
+	* @throws ArrayIndexOutOfBoundsException if position row or position column is out of the array bounds.
+	*/
 	public Jeton getJeton(Position position) throws Exception {
 		return plateauJetons[position.getLigne()][position.getColonne()];
 	}
@@ -168,7 +183,10 @@ public class Grille {
 		retour += "---------------";
 		return retour;
 	}
-	/** store token in array */
+	/** store the token in the array.
+	* @param jeton the token to set.
+	* @param position the position where to set the token.
+	*/
 	public void setJeton(Jeton jeton, Position position) {
 		plateauJetons[position.getLigne()][position.getColonne()] = jeton;
 	}
